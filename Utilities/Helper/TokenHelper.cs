@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Utilities
+namespace Utilities.Helper
 {
     public class TokenHelper
     {
