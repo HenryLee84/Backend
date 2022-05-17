@@ -17,10 +17,12 @@ namespace Repository.Repository
         /// </summary>
         /// <param name="user">使用者</param>
         /// <returns></returns>
-        public async Task CreateAsync(User user)
+        public async Task<User> CreateAsync(User user)
         {
             await _dbContext.User.AddAsync(user);
             await _dbContext.SaveChangesAsync();
+
+            return user;
         }
 
         /// <summary>

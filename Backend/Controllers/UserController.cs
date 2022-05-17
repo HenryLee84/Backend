@@ -4,6 +4,7 @@ using Repository.DTO;
 using Repository.Models;
 using Repository.Repository;
 using Utilities.Extensions;
+using Utilities.Helper;
 
 namespace Backend.Controllers
 {
@@ -13,10 +14,12 @@ namespace Backend.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserRepository _repository;
+        private readonly TokenHelper _tokenHelper;
 
-        public UserController(UserRepository repository)
+        public UserController(UserRepository repository, TokenHelper tokenHelper)
         {
             _repository = repository;
+            _tokenHelper = tokenHelper;
         }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Backend.Controllers
             if (user == null)
                 return NotFound("Invalid User");
 
-            return Ok(user);
+            return Ok(new GetUserViewModel(user.Id, user.Name, user.Account));
         }
 
         /// <summary>
@@ -61,9 +64,9 @@ namespace Backend.Controllers
                 CreateTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
             };
 
-            await _repository.CreateAsync(user);
+            user = await _repository.CreateAsync(user);
 
-            return Ok(user);
+            return Ok(new { user = new GetUserViewModel(user.Id, user.Name, user.Account), token = _tokenHelper.GenerateJwtToken(user.Id, user.Account)  });
         }
     }
 }
