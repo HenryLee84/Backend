@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
+using Repository.Repository;
 using System.Text;
 using Utilities.Helper;
 
@@ -16,6 +17,7 @@ if (connectionString != null)
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     });
 
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<TokenHelper>();
 
 builder.Services.AddControllers();
