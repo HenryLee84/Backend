@@ -20,7 +20,7 @@ namespace Backend.Controllers
         }
 
         /// <summary>
-        /// 取得該會員會員資料
+        /// 取得該會員資料
         /// </summary>
         /// <returns></returns>
         [HttpGet]
