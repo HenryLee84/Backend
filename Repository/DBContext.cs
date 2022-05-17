@@ -10,7 +10,7 @@ namespace Repository
 
         }
 
-        public DbSet<User>? User { get; set; }
+        public DbSet<User> User => Set<User>();
 
         protected override void OnModelCreating(ModelBuilder modelBuidler)
         {
