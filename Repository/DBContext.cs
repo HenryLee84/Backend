@@ -12,6 +12,8 @@ namespace Repository
 
         public DbSet<User> User => Set<User>();
 
+        public DbSet<Parameter> Parameter => Set<Parameter>();
+
         protected override void OnModelCreating(ModelBuilder modelBuidler)
         {
             base.OnModelCreating(modelBuidler);
