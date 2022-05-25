@@ -18,7 +18,10 @@ if (connectionString != null)
     });
 
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ParameterRepository>();
 builder.Services.AddScoped<TokenHelper>();
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
