@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  backend:
+    image: backend:alpha
+    container_name: backend
+    restart: always
+    networks:
+      - net
+    ports:
+      - 44378:80
+
+networks:
+  net:
+    name: net
+    external: true
