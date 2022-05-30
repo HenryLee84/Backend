@@ -48,5 +48,18 @@ namespace Repository.Repository
                                         .FirstOrDefaultAsync(x => x.Account == account
                                                                   && (string.IsNullOrEmpty(password) || x.Password == password));
         }
+
+        /// <summary>
+        /// 更新使用者
+        /// </summary>
+        /// <param name="user">使用者</param>
+        /// <returns></returns>
+        public async Task<User> UpdateAsync(User user)
+        {
+            _dbContext.User.Update(user);
+            await _dbContext.SaveChangesAsync();
+
+            return user;
+        }
     }
 }

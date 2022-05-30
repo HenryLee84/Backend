@@ -45,6 +45,7 @@ namespace Backend.Controllers
         /// <summary>
         /// 新建會員
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
@@ -66,7 +67,33 @@ namespace Backend.Controllers
 
             user = await _repository.CreateAsync(user);
 
-            return Ok(new { user = new GetUserViewModel(user.Id, user.Name, user.Account), token = _tokenHelper.GenerateJwtToken(user.Id, user.Account)  });
+            return Ok(new { user = new GetUserViewModel(user.Id, user.Name, user.Account), token = _tokenHelper.GenerateJwtToken(user.Id, user.Account) });
+        }
+
+        /// <summary>
+        /// 更新密碼
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("password")]
+        public async Task<IActionResult> UpdatePassword(UpdateUserPasswordViewModel model)
+        {
+            var account = User.GetUserAccount();
+
+            if (account == null)
+                return NotFound("Invalid User");
+
+            var user = await _repository.GetAsync(account, model.originalPassword);
+
+            if (user == null)
+                return NotFound("Invalid User");
+
+            // 只更新密碼
+            user.Password = model.newPassword;
+
+            await _repository.UpdateAsync(user);
+
+            return Ok();
         }
     }
 }
